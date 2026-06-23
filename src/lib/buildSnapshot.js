@@ -19,7 +19,15 @@ function buildSnapshot(config) {
     const loops = extractOpenLoops(conversation.messages);
     const { projectId, confidence } = linkProject(allProjects, conversation, config.aliasesFile);
     return {
-      ...conversation,
+      id: conversation.id,
+      title: conversation.title,
+      source: conversation.source,
+      parentSessionId: conversation.parentSessionId,
+      startedAt: conversation.startedAt,
+      lastMessageAt: conversation.lastMessageAt,
+      messageCount: conversation.messageCount,
+      channelLabel: conversation.channelLabel,
+      summary: conversation.summary,
       loops,
       projectId,
       confidence,
