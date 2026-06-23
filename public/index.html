@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects Hub</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <p class="eyebrow">Allen's system dashboard</p>
+      <h1>Projects Hub</h1>
+      <p class="lede">A live snapshot of projects, open loops, active conversations, and how they connect.</p>
+      <div class="hero-meta" id="heroMeta">Loading latest snapshot…</div>
+    </header>
+
+    <main>
+      <section class="cards" id="summaryCards"></section>
+
+      <nav class="tabs" aria-label="Views">
+        <button class="tab is-active" data-view="projects">Projects</button>
+        <button class="tab" data-view="loops">Open Loops</button>
+        <button class="tab" data-view="conversations">Conversations</button>
+        <button class="tab" data-view="graph">Graph</button>
+      </nav>
+
+      <section class="view is-active" id="view-projects">
+        <div class="split">
+          <div>
+            <h2>Active Projects</h2>
+            <div id="activeProjects" class="stack"></div>
+          </div>
+          <div>
+            <h2>Backlog & Completed</h2>
+            <div id="backlogProjects" class="stack compact"></div>
+            <div id="completedProjects" class="stack compact"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-loops">
+        <h2>Open Loops</h2>
+        <div id="openLoops" class="stack"></div>
+      </section>
+
+      <section class="view" id="view-conversations">
+        <h2>Recent Conversations</h2>
+        <div id="conversations" class="stack"></div>
+      </section>
+
+      <section class="view" id="view-graph">
+        <h2>Relationship Graph</h2>
+        <p class="muted">Projects appear on the left, conversations on the right. Lines show inferred links.</p>
+        <div id="graphCanvas" class="graph"></div>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

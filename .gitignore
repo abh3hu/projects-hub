@@ -1,0 +1,9 @@
+node_modules/
+playwright-report/
+test-results/
+coverage/
+.env
+.DS_Store
+data/generated/*.db
+data/generated/*.json
+!data/generated/.gitkeep

@@ -1,0 +1,142 @@
+{
+  "generatedAt": "2026-06-22T22:30:00.000Z",
+  "summary": {
+    "projectCounts": {
+      "active": 1,
+      "backlog": 1,
+      "completed": 1
+    },
+    "openLoopCount": 2,
+    "conversationCount": 1,
+    "linkedConversationCount": 1,
+    "generatedAt": "2026-06-22T22:30:00.000Z"
+  },
+  "projects": {
+    "active": [
+      {
+        "id": "projects-hub",
+        "name": "Projects Hub",
+        "section": "active",
+        "status": "In Progress",
+        "started": "2026-06-22",
+        "description": "Dashboard for open projects and open loops",
+        "location": "/projects-hub/",
+        "liveUrl": "https://projects.awrenchbot.com",
+        "schedule": "",
+        "blockedOn": "",
+        "remaining": [
+          {
+            "text": "Ship mobile dashboard",
+            "done": false
+          }
+        ]
+      }
+    ],
+    "backlog": [
+      {
+        "id": "graph-polish",
+        "name": "Graph Polish",
+        "section": "backlog",
+        "status": "",
+        "started": "",
+        "description": "Improve the relationship graph view",
+        "location": "/projects-hub/",
+        "liveUrl": "",
+        "schedule": "",
+        "blockedOn": "",
+        "remaining": []
+      }
+    ],
+    "completed": [
+      {
+        "id": "status-page",
+        "name": "Status Page",
+        "section": "completed",
+        "status": "Complete",
+        "started": "2026-02-07",
+        "description": "SRE-grade status page",
+        "location": "/status-page/",
+        "liveUrl": "https://status.awrenchbot.com",
+        "schedule": "",
+        "blockedOn": "",
+        "remaining": []
+      }
+    ],
+    "all": []
+  },
+  "conversations": [
+    {
+      "id": "conv-1",
+      "title": "Conversation Project Graph Tracking",
+      "source": "discord",
+      "parentSessionId": null,
+      "startedAt": 1781532850,
+      "lastMessageAt": 1781532850,
+      "messageCount": 5,
+      "messages": [
+        {
+          "role": "user",
+          "content": "I want you to build a dashboard and figure out the next step.",
+          "timestamp": 1781532850
+        }
+      ],
+      "channelLabel": null,
+      "summary": "Build the dashboard and figure out the next step.",
+      "loops": [
+        {
+          "text": "build a dashboard and figure out the next step",
+          "role": "user",
+          "timestamp": 1781532850
+        }
+      ],
+      "projectId": "projects-hub",
+      "confidence": 0.75,
+      "isOpen": true
+    }
+  ],
+  "openLoops": [
+    {
+      "id": "loop-1",
+      "text": "Build a dashboard and figure out the next step.",
+      "role": "user",
+      "conversationId": "conv-1",
+      "conversationTitle": "Conversation Project Graph Tracking",
+      "projectId": "projects-hub",
+      "projectName": "Projects Hub",
+      "timestamp": 1781532850
+    },
+    {
+      "id": "loop-2",
+      "text": "Ship mobile dashboard.",
+      "role": "assistant",
+      "conversationId": "conv-1",
+      "conversationTitle": "Conversation Project Graph Tracking",
+      "projectId": "projects-hub",
+      "projectName": "Projects Hub",
+      "timestamp": 1781532850
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "project:projects-hub",
+        "label": "Projects Hub",
+        "type": "project",
+        "section": "active"
+      },
+      {
+        "id": "conversation:conv-1",
+        "label": "Conversation Project Graph Tracking",
+        "type": "conversation"
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge:conv-1:projects-hub",
+        "source": "conversation:conv-1",
+        "target": "project:projects-hub",
+        "type": "about_project"
+      }
+    ]
+  }
+}
