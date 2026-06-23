@@ -11,6 +11,10 @@ Represents a recent Hermes session with title, timestamps, recent messages, infe
 Represents an unresolved task, blocker, or next-step statement inferred from recent messages.
 Fields: text, timestamp, role, conversationId, projectId.
 
+## Weekly Recap
+Represents a week bucket of progress inferred from recent conversations plus current project remaining items.
+Fields: weekStart, weekEnd, weekLabel, conversationCount, projectsTouched, done[], next[].
+
 ## Graph
 A lightweight relationship model with:
 - project nodes

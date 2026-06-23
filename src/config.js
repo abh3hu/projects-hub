@@ -14,7 +14,10 @@ function getConfig() {
     snapshotFile: process.env.SNAPSHOT_FILE || path.join(__dirname, '..', 'data', 'generated', 'snapshot.json'),
     derivedDbFile: process.env.DERIVED_DB_FILE || path.join(__dirname, '..', 'data', 'generated', 'projects-hub.db'),
     stateDbFile: process.env.STATE_DB_FILE || path.join(hermesHome, 'state.db'),
-    aliasesFile: process.env.ALIASES_FILE || path.join(__dirname, '..', 'config', 'project-aliases.json')
+    aliasesFile: process.env.ALIASES_FILE || path.join(__dirname, '..', 'config', 'project-aliases.json'),
+    conversationLimit: Number(process.env.CONVERSATION_LIMIT || 20),
+    weeklyConversationLimit: Number(process.env.WEEKLY_CONVERSATION_LIMIT || 120),
+    weeklyRecapWeeks: Number(process.env.WEEKLY_RECAP_WEEKS || 4)
   };
 }
 

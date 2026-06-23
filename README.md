@@ -1,6 +1,6 @@
 # Projects Hub
 
-Projects Hub is Allen's dashboard for tracking open projects, unresolved loops, recent conversations, and the links between them.
+Projects Hub is Allen's dashboard for tracking open projects, unresolved loops, recent conversations, weekly progress recaps, and the links between them.
 
 ## Sprint 1 Deliverable
 A live, mobile-friendly dashboard at `https://projects.awrenchbot.com` backed by a locally generated snapshot of:
@@ -45,6 +45,11 @@ By default this reads:
 - `PROJECTS.md` from `~/.openclaw/workspace`
 - Hermes session DB from `~/.hermes/state.db`
 - channel directory from `~/.hermes/channel_directory.json`
+
+The generated snapshot now also includes `summary.weeklyRecaps`, which groups recent work into week buckets with:
+- projects touched
+- inferred done items
+- inferred next steps / remaining work
 
 You can override paths with environment variables from `.env.example`.
 

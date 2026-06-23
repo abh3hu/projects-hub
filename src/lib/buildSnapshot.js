@@ -6,6 +6,7 @@ const { loadRecentConversations } = require('./hermesSessions');
 const { extractOpenLoops } = require('./openLoops');
 const { linkProject } = require('./linkProjects');
 const { buildGraph } = require('./buildGraph');
+const { generateWeeklyRecaps } = require('./weeklyRecaps');
 
 function ensureDir(filePath) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
@@ -13,7 +14,8 @@ function ensureDir(filePath) {
 
 function buildSnapshot(config) {
   const { all: allProjects, sections } = loadProjects(config.projectsFile);
-  const conversations = loadRecentConversations(config);
+  const conversations = loadRecentConversations({ ...config, limit: config.conversationLimit });
+  const recapConversations = loadRecentConversations({ ...config, limit: config.weeklyConversationLimit });
 
   const enrichedConversations = conversations.map(conversation => {
     const loops = extractOpenLoops(conversation.messages);
@@ -28,6 +30,28 @@ function buildSnapshot(config) {
       messageCount: conversation.messageCount,
       channelLabel: conversation.channelLabel,
       summary: conversation.summary,
+      messages: conversation.messages,
+      loops,
+      projectId,
+      confidence,
+      isOpen: loops.length > 0 || !!projectId
+    };
+  });
+
+  const enrichedRecapConversations = recapConversations.map(conversation => {
+    const loops = extractOpenLoops(conversation.messages);
+    const { projectId, confidence } = linkProject(allProjects, conversation, config.aliasesFile);
+    return {
+      id: conversation.id,
+      title: conversation.title,
+      source: conversation.source,
+      parentSessionId: conversation.parentSessionId,
+      startedAt: conversation.startedAt,
+      lastMessageAt: conversation.lastMessageAt,
+      messageCount: conversation.messageCount,
+      channelLabel: conversation.channelLabel,
+      summary: conversation.summary,
+      messages: conversation.messages,
       loops,
       projectId,
       confidence,
@@ -87,6 +111,11 @@ function buildSnapshot(config) {
     seenLoops.add(key);
     dedupedLoops.push(loop);
   }
+  const weeklyRecaps = generateWeeklyRecaps({
+    projects: allProjects,
+    conversations: enrichedRecapConversations,
+    maxWeeks: config.weeklyRecapWeeks
+  });
   const generatedAt = new Date().toISOString();
   const summary = {
     projectCounts: {
@@ -97,6 +126,7 @@ function buildSnapshot(config) {
     openLoopCount: dedupedLoops.length,
     conversationCount: enrichedConversations.length,
     linkedConversationCount: enrichedConversations.filter(item => item.projectId).length,
+    weeklyRecaps,
     generatedAt
   };
 
@@ -111,6 +141,7 @@ function buildSnapshot(config) {
     },
     conversations: enrichedConversations,
     openLoops: dedupedLoops,
+    weeklyRecaps,
     graph
   };
 }

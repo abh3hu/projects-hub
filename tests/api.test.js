@@ -25,3 +25,10 @@ test('projects endpoint returns active project list', async () => {
   assert.equal(response.statusCode, 200);
   assert.equal(response.body.active[0].name, 'Projects Hub');
 });
+
+test('dashboard summary includes weekly recaps', async () => {
+  const response = await request(app).get('/api/dashboard');
+  assert.equal(response.statusCode, 200);
+  assert.equal(response.body.summary.weeklyRecaps.length, 1);
+  assert.equal(response.body.summary.weeklyRecaps[0].done[0].text, 'Deployed the dashboard');
+});

@@ -9,6 +9,45 @@
     "openLoopCount": 2,
     "conversationCount": 1,
     "linkedConversationCount": 1,
+    "weeklyRecaps": [
+      {
+        "id": "week-2026-06-16T00:00:00.000Z",
+        "order": 0,
+        "weekStart": "2026-06-16T00:00:00.000Z",
+        "weekEnd": "2026-06-22T23:59:59.999Z",
+        "weekLabel": "Jun 16 – Jun 22",
+        "conversationCount": 1,
+        "projectsTouched": ["Projects Hub"],
+        "done": [
+          {
+            "text": "Deployed the dashboard",
+            "role": "assistant",
+            "timestamp": 1781532850,
+            "conversationId": "conv-1",
+            "projectId": "projects-hub",
+            "projectName": "Projects Hub"
+          }
+        ],
+        "next": [
+          {
+            "text": "Build a dashboard and figure out the next step.",
+            "role": "user",
+            "timestamp": 1781532850,
+            "conversationId": "conv-1",
+            "projectId": "projects-hub",
+            "projectName": "Projects Hub"
+          },
+          {
+            "text": "Ship mobile dashboard",
+            "role": "project",
+            "timestamp": null,
+            "conversationId": null,
+            "projectId": "projects-hub",
+            "projectName": "Projects Hub"
+          }
+        ]
+      }
+    ],
     "generatedAt": "2026-06-22T22:30:00.000Z"
   },
   "projects": {
@@ -138,5 +177,44 @@
         "type": "about_project"
       }
     ]
-  }
+  },
+  "weeklyRecaps": [
+    {
+      "id": "week-2026-06-16T00:00:00.000Z",
+      "order": 0,
+      "weekStart": "2026-06-16T00:00:00.000Z",
+      "weekEnd": "2026-06-22T23:59:59.999Z",
+      "weekLabel": "Jun 16 – Jun 22",
+      "conversationCount": 1,
+      "projectsTouched": ["Projects Hub"],
+      "done": [
+        {
+          "text": "Deployed the dashboard",
+          "role": "assistant",
+          "timestamp": 1781532850,
+          "conversationId": "conv-1",
+          "projectId": "projects-hub",
+          "projectName": "Projects Hub"
+        }
+      ],
+      "next": [
+        {
+          "text": "Build a dashboard and figure out the next step.",
+          "role": "user",
+          "timestamp": 1781532850,
+          "conversationId": "conv-1",
+          "projectId": "projects-hub",
+          "projectName": "Projects Hub"
+        },
+        {
+          "text": "Ship mobile dashboard",
+          "role": "project",
+          "timestamp": null,
+          "conversationId": null,
+          "projectId": "projects-hub",
+          "projectName": "Projects Hub"
+        }
+      ]
+    }
+  ]
 }

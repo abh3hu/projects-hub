@@ -34,6 +34,29 @@ function summaryCards(summary) {
   `).join('');
 }
 
+function renderWeeklyRecaps(recaps) {
+  byId('weeklyRecaps').innerHTML = recaps.length ? `<div class="recap-grid">${recaps.map(recap => `
+    <article class="item">
+      <div class="meta"><span class="badge">${recap.weekLabel}</span><span>${recap.conversationCount} conversations</span></div>
+      <h3>${recap.projectsTouched.length ? recap.projectsTouched.join(', ') : 'General system work'}</h3>
+      <div class="recap-meta">
+        <span>${recap.done.length} done</span>
+        <span>${recap.next.length} next</span>
+      </div>
+      <div class="recap-columns">
+        <div class="recap-column">
+          <h3>Done</h3>
+          ${recap.done.length ? `<ul class="list">${recap.done.map(item => `<li>${item.text}</li>`).join('')}</ul>` : '<p class="muted">No completions captured.</p>'}
+        </div>
+        <div class="recap-column">
+          <h3>Next</h3>
+          ${recap.next.length ? `<ul class="list">${recap.next.map(item => `<li>${item.text}</li>`).join('')}</ul>` : '<p class="muted">No next steps captured.</p>'}
+        </div>
+      </div>
+    </article>
+  `).join('')}</div>` : '<article class="item"><p>No weekly recaps available yet.</p></article>';
+}
+
 function renderProjects(projects) {
   byId('activeProjects').innerHTML = projects.active.map(project => `
     <article class="item">
@@ -125,6 +148,7 @@ function activateTabs() {
     const dashboard = await loadDashboard();
     byId('heroMeta').textContent = `Snapshot generated ${formatDate(dashboard.generatedAt)} • ${dashboard.summary.linkedConversationCount} conversations linked to projects`;
     summaryCards(dashboard.summary);
+    renderWeeklyRecaps(dashboard.summary.weeklyRecaps || dashboard.weeklyRecaps || []);
     renderProjects(dashboard.projects);
     renderLoops(dashboard.openLoops);
     renderConversations(dashboard.conversations);
