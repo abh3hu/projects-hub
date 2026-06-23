@@ -13,7 +13,7 @@ const bucket = process.env.DEPLOY_BUCKET || 'awrenchbot-artifacts';
 const key = process.env.DEPLOY_KEY || 'projects-hub/snapshot.json';
 const port = process.env.PORT || '3851';
 
-execFileSync('aws', ['s3', 'cp', config.snapshotOutput, `s3://${bucket}/${key}`], { stdio: 'inherit' });
+execFileSync('aws', ['s3', 'cp', config.snapshotFile, `s3://${bucket}/${key}`], { stdio: 'inherit' });
 const presignedUrl = execFileSync('aws', ['s3', 'presign', `s3://${bucket}/${key}`, '--expires-in', '3600'], {
   encoding: 'utf8'
 }).trim();
@@ -32,7 +32,7 @@ const remoteCommand = [
   `pm2 delete projects-hub || true`,
   `PORT=${port} SNAPSHOT_FILE=${remoteDir}/data/generated/snapshot.json pm2 start server.js --name projects-hub`,
   'pm2 save',
-  `curl -fsS http://127.0.0.1:${port}/health`
+  `for i in 1 2 3 4 5 6 7 8 9 10; do curl -fsS http://127.0.0.1:${port}/health && break; sleep 2; done`
 ].join(' && ');
 
 const commandId = execFileSync('aws', [
