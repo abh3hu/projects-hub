@@ -19,7 +19,7 @@
 - build snapshot: `npm run build:snapshot`
 - start: `npm run dev` or `npm start`
 - test: `npm test`
-- deploy: `node scripts/deploy-ssm.js`
+- deploy: `npm run build:snapshot && aws s3 cp data/generated/snapshot.json s3://awrenchbot-artifacts/projects-hub/snapshot.json`, then pull/restart `projects-hub` via PM2 on the public EC2 host
 
 ## Key files
 - `src/lib/buildSnapshot.js`: main snapshot orchestrator
@@ -32,7 +32,8 @@
 ## Known constraints
 - Open-loop inference is heuristic, not semantic truth.
 - Production data is injected during deploy and intentionally not committed.
-- Public deployment depends on AWS SSM access and the existing PM2 process name `projects-hub`.
+- Public deployment depends on AWS SSM access, the existing PM2 process name `projects-hub`, and the S3 artifact path `s3://awrenchbot-artifacts/projects-hub/snapshot.json`.
+- Attempting to inline the full snapshot inside one SSM command payload will hit the SSM document size ceiling.
 
 ## Next likely tasks
 - Add manual pin/unpin controls for conversations.

@@ -50,15 +50,21 @@ You can override paths with environment variables from `.env.example`.
 
 ## Deployment
 ```bash
+npm run build:snapshot
+aws s3 cp data/generated/snapshot.json s3://awrenchbot-artifacts/projects-hub/snapshot.json
 node scripts/deploy-ssm.js
 ```
 
-This script:
+This workflow:
 1. builds a fresh private snapshot locally,
 2. writes the snapshot into `data/generated/snapshot.json`,
-3. updates the code on the public EC2 instance,
-4. restarts PM2,
-5. verifies the local health endpoint on the server.
+3. uploads the snapshot as an artifact to `s3://awrenchbot-artifacts/projects-hub/snapshot.json`,
+4. updates the code on the public EC2 instance,
+5. fetches the artifact onto the server,
+6. restarts PM2 on port `3851`,
+7. verifies the local health endpoint on the server.
+
+Why the S3 hop: the snapshot is too large to safely inline inside a single SSM `send-command` payload.
 
 ## Privacy Model
 - Real dashboard data is **not committed** to git.

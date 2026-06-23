@@ -9,7 +9,14 @@ writeSnapshot(config, snapshot);
 const instanceId = process.env.PUBLIC_INSTANCE_ID || 'i-05957ab2aa06f870e';
 const repoUrl = process.env.REPO_URL || 'https://github.com/abh3hu/projects-hub.git';
 const remoteDir = '/home/ubuntu/workspace/projects-hub';
-const snapshotPayload = Buffer.from(JSON.stringify(snapshot, null, 2)).toString('base64');
+const bucket = process.env.DEPLOY_BUCKET || 'awrenchbot-artifacts';
+const key = process.env.DEPLOY_KEY || 'projects-hub/snapshot.json';
+const port = process.env.PORT || '3851';
+
+execFileSync('aws', ['s3', 'cp', config.snapshotOutput, `s3://${bucket}/${key}`], { stdio: 'inherit' });
+const presignedUrl = execFileSync('aws', ['s3', 'presign', `s3://${bucket}/${key}`, '--expires-in', '3600'], {
+  encoding: 'utf8'
+}).trim();
 
 const remoteCommand = [
   'set -e',
@@ -21,10 +28,11 @@ const remoteCommand = [
   'git pull origin main',
   'npm ci --omit=dev',
   'mkdir -p data/generated',
-  `python3 - <<'PY'\nimport base64, pathlib\npathlib.Path('data/generated').mkdir(parents=True, exist_ok=True)\npathlib.Path('data/generated/snapshot.json').write_bytes(base64.b64decode('${snapshotPayload}'))\nPY`,
-  `sudo -u ubuntu -H bash -lc 'cd ${remoteDir} && HOME=/home/ubuntu pm2 restart projects-hub || (HOME=/home/ubuntu pm2 start server.js --name projects-hub && HOME=/home/ubuntu pm2 save)'`,
-  'sleep 5',
-  'curl -fsS http://localhost:3851/health'
+  `curl -fsSL '${presignedUrl}' -o data/generated/snapshot.json`,
+  `pm2 delete projects-hub || true`,
+  `PORT=${port} SNAPSHOT_FILE=${remoteDir}/data/generated/snapshot.json pm2 start server.js --name projects-hub`,
+  'pm2 save',
+  `curl -fsS http://127.0.0.1:${port}/health`
 ].join(' && ');
 
 const commandId = execFileSync('aws', [

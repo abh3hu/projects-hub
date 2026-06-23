@@ -6,4 +6,4 @@
 - Implemented snapshot builder using `PROJECTS.md` and Hermes session history.
 - Added dashboard UI, API endpoints, and health check.
 - Added unit, API, and E2E tests.
-- Added SSM deployment script for the public EC2 instance.
+- Added public EC2 deployment workflow using GitHub + S3 snapshot artifact + PM2 restart.
